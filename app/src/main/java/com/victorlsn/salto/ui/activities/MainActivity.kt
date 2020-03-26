@@ -1,9 +1,11 @@
-package com.victorlsn.salto
+package com.victorlsn.salto.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.victorlsn.salto.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity :
+    BaseActivity() {
+    private val fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
