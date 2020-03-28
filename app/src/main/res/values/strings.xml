@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Salto</string>
     <string name="press_back_again">Press back again to exit</string>
+    <string name="add_employees">Add Employees</string>
+    <string name="add_doors">Add Doors</string>
+    <string name="name">Name</string>
+    <string name="add_employee">Add employee</string>
+    <string name="add_door">Add door</string>
+    <string name="door_exists">A door with that name already exists.</string>
+    <string name="door_doesnt_exist">This door doesn\'t exist anymore.</string>
 </resources>
