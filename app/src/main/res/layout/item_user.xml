@@ -19,11 +19,11 @@
 
 
         <ImageView
-            android:id="@+id/employeeIconImageView"
+            android:id="@+id/userIconImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_person"
-            app:layout_constraintBottom_toTopOf="@id/employeeNameTextView"
+            app:layout_constraintBottom_toTopOf="@id/userNameTextView"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.3"
@@ -32,13 +32,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/employeeNameTextView"
+            android:id="@+id/userNameTextView"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:translationY="-8dp"
+            android:translationY="-4dp"
             android:translationZ="1dp"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="10sp"
@@ -48,7 +48,7 @@
             app:autoSizeMinTextSize="10sp"
             app:autoSizeMaxTextSize="18sp"
             app:autoSizeStepGranularity="2sp"
-            app:layout_constraintTop_toBottomOf="@id/employeeIconImageView"
+            app:layout_constraintTop_toBottomOf="@id/userIconImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Front door" />
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            app:layout_constraintTop_toBottomOf="@id/employeeNameTextView"
+            app:layout_constraintTop_toBottomOf="@id/userNameTextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />

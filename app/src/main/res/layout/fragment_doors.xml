@@ -42,8 +42,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintWidth_percent="0.6"
         app:layout_constraintHeight_percent="0.08"
-        android:background="@drawable/white_stroked_rounded_corners_blue_bg"
-        />
+        android:background="@drawable/white_stroked_rounded_corners_blue_bg" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/doorsRecyclerView"

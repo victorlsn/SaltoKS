@@ -39,7 +39,7 @@ class DoorsPresenter @Inject constructor(
             return
         }
 
-        val door = Door(name)
+        val door = Door(name.trim())
 
         disposable.add(
             repository.addDoor(door)

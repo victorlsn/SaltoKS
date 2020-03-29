@@ -1,7 +1,6 @@
 package com.victorlsn.salto.contracts
 
 import com.victorlsn.salto.data.models.Door
-import com.victorlsn.salto.data.models.Employee
 
 class DoorsContract {
 

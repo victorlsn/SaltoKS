@@ -1,25 +1,24 @@
 package com.victorlsn.salto.data.models
 
-import kotlinx.android.parcel.IgnoredOnParcel
 import java.io.Serializable
 import java.util.HashSet
 
-class Door(var name: String) : Serializable {
+class Door(val name: String) : Serializable {
     val id: Int = name.hashCode()
     private val authorizedPersonnel = HashSet<Int>()
     @Transient
     var isSelected = false
 
-    fun addPermission(employee: Employee) {
-        authorizedPersonnel.add(employee.id)
+    fun addPermission(user: User) {
+        authorizedPersonnel.add(user.id)
     }
 
-    fun removePermission(employee: Employee) {
-        authorizedPersonnel.remove(employee.id)
+    fun removePermission(user: User) {
+        authorizedPersonnel.remove(user.id)
     }
 
-    fun isUserAuthorized(employee: Employee) : Boolean {
-        return authorizedPersonnel.contains(employee.id)
+    fun isUserAuthorized(user: User) : Boolean {
+        return authorizedPersonnel.contains(user.id)
     }
 
     override fun equals(other: Any?): Boolean {

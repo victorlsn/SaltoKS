@@ -1,9 +1,7 @@
 package com.victorlsn.salto.di.modules
 
 import com.victorlsn.salto.di.scopes.FragmentScoped
-import com.victorlsn.salto.ui.fragments.AccessFragment
-import com.victorlsn.salto.ui.fragments.DoorsFragment
-import com.victorlsn.salto.ui.fragments.EmployeesFragment
+import com.victorlsn.salto.ui.fragments.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -13,7 +11,7 @@ abstract class FragmentBindingModule {
 
     @FragmentScoped
     @ContributesAndroidInjector
-    internal abstract fun employeesFragment(): EmployeesFragment
+    internal abstract fun usersFragment(): UsersFragment
 
     @FragmentScoped
     @ContributesAndroidInjector
@@ -22,5 +20,13 @@ abstract class FragmentBindingModule {
     @FragmentScoped
     @ContributesAndroidInjector
     internal abstract fun accessFragment(): AccessFragment
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    internal abstract fun openDoorFragment(): OpenDoorFragment
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    internal abstract fun eventsFragment(): EventsFragment
 
 }

@@ -69,7 +69,7 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
         nameInputLayout.error = null
 
         presenter.getDoors()
-        Toast.makeText(context!!, "Door added successfully", Toast.LENGTH_LONG).show()
+        Toast.makeText(context!!, "Door added successfully", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAddNewDoorFailure(error: String) {
@@ -78,7 +78,7 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
 
     override fun onRemoveDoorSuccess() {
         presenter.getDoors()
-        Toast.makeText(context!!, "Door removed successfully", Toast.LENGTH_LONG).show()
+        Toast.makeText(context!!, "Door removed successfully", Toast.LENGTH_SHORT).show()
     }
 
     override fun onGetDoorsSuccess(doors: ArrayList<Door>) {
@@ -86,7 +86,7 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
     }
 
     override fun onDefaultError(error: String) {
-        Toast.makeText(context!!, error, Toast.LENGTH_LONG).show()
+        Toast.makeText(context!!, error, Toast.LENGTH_SHORT).show()
     }
 
     override fun showLoading() {

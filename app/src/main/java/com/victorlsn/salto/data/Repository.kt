@@ -4,7 +4,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.pixplicity.easyprefs.library.Prefs
 import com.victorlsn.salto.data.models.Door
-import com.victorlsn.salto.data.models.Employee
+import com.victorlsn.salto.data.models.LogEvent
+import com.victorlsn.salto.data.models.User
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,54 +13,54 @@ import javax.inject.Singleton
 @Singleton
 class Repository @Inject constructor() {
 
-    // MARK : Employee-related methods
+    // MARK : User-related methods
 
-    fun getEmployees() : Observable<ArrayList<Employee>> {
-        val employees = readEmployees()
-        return Observable.just(employees)
+    fun getUsers() : Observable<ArrayList<User>> {
+        val users = readUsers()
+        return Observable.just(users)
     }
 
-    fun addEmployee(newEmployee : Employee) : Observable<Boolean> {
-        val employees = readEmployees()
-        if (employees.contains(newEmployee)) {
+    fun addUser(newUser : User) : Observable<Boolean> {
+        val users = readUsers()
+        if (users.contains(newUser)) {
             return Observable.just(false)
         }
-        employees.add(newEmployee)
+        users.add(newUser)
 
-        updateEmployees(employees)
+        updateUsers(users)
 
         return Observable.just(true)
     }
 
-    fun removeEmployee(employee: Employee) : Observable<Boolean> {
-        val employees = readEmployees()
-        if (employees.contains(employee)) {
-            employees.remove(employee)
+    fun removeUser(user: User) : Observable<Boolean> {
+        val users = readUsers()
+        if (users.contains(user)) {
+            users.remove(user)
 
-            updateEmployees(employees)
+            updateUsers(users)
 
             return Observable.just(true)
         }
         return Observable.just(false)
     }
 
-    private fun readEmployees() : ArrayList<Employee> {
-        val employeesJson = Prefs.getString(EMPLOYEES_KEY, null)
+    private fun readUsers() : ArrayList<User> {
+        val usersJson = Prefs.getString(USERS_KEY, null)
 
-        employeesJson?.let {
-            val itemType = object : TypeToken<java.util.ArrayList<Employee>>() {}.type
+        usersJson?.let {
+            val itemType = object : TypeToken<java.util.ArrayList<User>>() {}.type
 
-            return Gson().fromJson(employeesJson, itemType)
+            return Gson().fromJson(usersJson, itemType)
         }
 
         return ArrayList()
     }
 
-    private fun updateEmployees(employees: ArrayList<Employee>) {
-        employees.sortBy { it.name }
+    private fun updateUsers(users: ArrayList<User>) {
+        users.sortBy { it.name }
 
-        val employeesJson = Gson().toJson(employees)
-        Prefs.putString(EMPLOYEES_KEY, employeesJson)
+        val usersJson = Gson().toJson(users)
+        Prefs.putString(USERS_KEY, usersJson)
     }
 
     // MARK : Doors-related methods
@@ -130,29 +131,83 @@ class Repository @Inject constructor() {
 
     // MARK : Access-related methods
 
-    fun changeEmployeePermissionForDoor(employee: Employee, selectedDoor: Door, authorized: Boolean) : Observable<Boolean> {
+    fun changeUserPermissionForDoor(user: User, selectedDoor: Door, authorized: Boolean) : Observable<Boolean> {
         return if (authorized) {
-            Observable.just(addPermissionForDoor(employee, selectedDoor))
+            Observable.just(addPermissionForDoor(user, selectedDoor))
         } else {
-            Observable.just(removePermissionForDoor(employee, selectedDoor))
+            Observable.just(removePermissionForDoor(user, selectedDoor))
         }
 
     }
 
-    private fun addPermissionForDoor(employee: Employee, selectedDoor: Door) : Boolean {
-        selectedDoor.addPermission(employee)
+    private fun addPermissionForDoor(user: User, selectedDoor: Door) : Boolean {
+        selectedDoor.addPermission(user)
 
         return updateDoor(selectedDoor)
     }
 
-    private fun removePermissionForDoor(employee: Employee, selectedDoor: Door) : Boolean {
-        selectedDoor.removePermission(employee)
+    private fun removePermissionForDoor(user: User, selectedDoor: Door) : Boolean {
+        selectedDoor.removePermission(user)
 
         return updateDoor(selectedDoor)
     }
+
+    // MARK : Door opening related methods
+
+    fun openDoor(user: User, door: Door) : Observable<Boolean> {
+        var success = false
+        val doors = readDoors()
+        for (actualDoor in doors) {
+            if (door == actualDoor && actualDoor.isUserAuthorized(user)) {
+                success = true
+                break
+            }
+        }
+
+        logEvent(user, door, success)
+        return Observable.just(success)
+    }
+
+    // MARK : Log related methods
+
+    fun getEventLog() : Observable<ArrayList<LogEvent>> {
+        return Observable.just(readEventLog())
+    }
+
+    private fun logEvent(user: User, door: Door, success: Boolean) {
+        val event = LogEvent(user, door, success)
+        updateEventLog(event)
+    }
+
+    private fun updateEventLog(logEvent: LogEvent) {
+        val logs = readEventLog()
+        logs.add(logEvent)
+        updateEventLogJson(logs)
+    }
+
+    private fun readEventLog() : ArrayList<LogEvent> {
+        val logsJson = Prefs.getString(LOGS_KEY, null)
+
+        logsJson?.let {
+            val itemType = object : TypeToken<java.util.ArrayList<LogEvent>>() {}.type
+
+            return Gson().fromJson(logsJson, itemType)
+        }
+
+        return ArrayList()
+    }
+
+    private fun updateEventLogJson(logs: ArrayList<LogEvent>) {
+        logs.sortBy { it.date }
+
+        val logsJson = Gson().toJson(logs)
+        Prefs.putString(LOGS_KEY, logsJson)
+    }
+
 
     companion object {
-        private const val EMPLOYEES_KEY = "EMPLOYEES"
+        private const val USERS_KEY = "USERS"
         private const val DOORS_KEY = "DOORS"
+        private const val LOGS_KEY = "LOG"
     }
 }

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
     <ScrollView
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +21,7 @@
             android:paddingBottom="32dp">
 
             <TextView
-                android:id="@+id/doorsTextView"
+                android:id="@+id/usersTextView"
                 android:layout_width="match_parent"
                 android:textColor="@android:color/black"
                 android:layout_marginTop="16dp"
@@ -32,32 +31,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/doors_access_text" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/doorsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/doorsTextView"
-                app:layout_constraintVertical_bias="0"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                />
-
-            <TextView
-                android:id="@+id/usersTextView"
-                android:layout_width="match_parent"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/doorsRecyclerView"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="@string/users_access_text"
-                android:visibility="gone"
+                android:text="@string/select_user"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -71,6 +45,46 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 />
+
+            <TextView
+                android:id="@+id/doorsTextView"
+                android:layout_width="match_parent"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/usersRecyclerView"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/select_door" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/doorsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/doorsTextView"
+                app:layout_constraintVertical_bias="0"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                />
+
+            <Button
+                android:id="@+id/openDoorButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/doorsRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="24dp"
+                android:text="@string/open_door"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                app:layout_constraintWidth_percent="0.6"
+                app:layout_constraintHeight_percent="0.08"
+                android:background="@drawable/white_stroked_rounded_corners_blue_bg" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

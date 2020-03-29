@@ -6,7 +6,7 @@
     android:animateLayoutChanges="true">
 
     <ImageView
-        android:id="@+id/employeeIconImageView"
+        android:id="@+id/userIconImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="12dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/employeeNameTextView"
+        android:id="@+id/userNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,13 +28,13 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/deleteEmployeeImageView"
+        app:layout_constraintEnd_toStartOf="@id/deleteUserImageView"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/employeeIconImageView"
+        app:layout_constraintStart_toEndOf="@id/userIconImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/deleteEmployeeImageView"
+        android:id="@+id/deleteUserImageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

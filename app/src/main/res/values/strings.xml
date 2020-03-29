@@ -1,14 +1,21 @@
 <resources>
     <string name="app_name">Salto</string>
     <string name="press_back_again">Press back again to exit</string>
-    <string name="add_employees">Add Employees</string>
+    <string name="add_users">Add Users</string>
     <string name="add_doors">Add Doors</string>
     <string name="name">Name</string>
-    <string name="add_employee">Add employee</string>
+    <string name="add_user">Add user</string>
     <string name="add_door">Add door</string>
+    <string name="open_door">Open door</string>
     <string name="door_exists_error">A door with that name already exists.</string>
     <string name="door_does_not_exist_error">This door doesn\'t exist anymore.</string>
+    <string name="no_doors_text">You have no doors registered. Please add at least one before trying to set access.</string>
+    <string name="no_users_text">You have no users registered. Please add at least one before trying to set access.</string>
     <string name="doors_access_text">Select the door you want to change permissions for:</string>
-    <string name="employees_access_text">Check/uncheck the employees whom you want to change permissions for:</string>
-    <string name="permission_change_error">It was not possible to change permissions for this door/employee.</string>
+    <string name="users_access_text">Check/uncheck the users whom you want to change permissions for:</string>
+    <string name="permission_change_error">It was not possible to change permissions for this door/user.</string>
+    <string name="select_user">Select the current user:</string>
+    <string name="select_door">Select the door you wish to open:</string>
+    <string name="empty_log">There are no events recorded</string>
+    <string name="must_select_user_and_door">You must select a user and a door.</string>
 </resources>

@@ -2,7 +2,7 @@ package com.victorlsn.salto.presenters
 
 import android.content.Context
 import com.victorlsn.salto.R
-import com.victorlsn.salto.contracts.AccessContract
+import com.victorlsn.salto.contracts.OpenDoorsContract
 import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.data.models.User
@@ -11,11 +11,11 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class AccessPresenter @Inject constructor(
+class OpenDoorsPresenter @Inject constructor(
     private val context: Context,
     private val repository: Repository
-) : BasePresenter<AccessContract.View>(),
-    AccessContract.Presenter {
+) : BasePresenter<OpenDoorsContract.View>(),
+    OpenDoorsContract.Presenter {
 
     override fun getDoors() {
         disposable.add(
@@ -43,20 +43,23 @@ class AccessPresenter @Inject constructor(
         view?.onGetUsersSuccess(users)
     }
 
-    override fun changePermission(user: User, door: Door, authorized: Boolean) {
+    override fun openDoor(door: Door?, user: User?) {
+        if (door == null || user == null) {
+            defaultError(Error(context.getString(R.string.must_select_user_and_door)))
+            return
+        }
+
         disposable.add(
-            repository.changeUserPermissionForDoor(user, door, authorized)
+            repository.openDoor(user, door)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::authorizationChanged, this::defaultError)
+                .subscribe(this::triedToOpenDoor, this::defaultError)
         )
     }
 
-    private fun authorizationChanged(success: Boolean) {
-        Timber.d("Change Authorization call successful")
-        if (!success) {
-            defaultError(Error(context.getString(R.string.permission_change_error)))
-        }
+    private fun triedToOpenDoor(success: Boolean) {
+        Timber.d("Tried to open door")
+        view?.onOpenDoor(success)
     }
 
     private fun defaultError(error: Throwable) {
