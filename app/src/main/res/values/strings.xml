@@ -6,8 +6,9 @@
     <string name="name">Name</string>
     <string name="add_employee">Add employee</string>
     <string name="add_door">Add door</string>
-    <string name="door_exists">A door with that name already exists.</string>
-    <string name="door_doesnt_exist">This door doesn\'t exist anymore.</string>
+    <string name="door_exists_error">A door with that name already exists.</string>
+    <string name="door_does_not_exist_error">This door doesn\'t exist anymore.</string>
     <string name="doors_access_text">Select the door you want to change permissions for:</string>
     <string name="employees_access_text">Check/uncheck the employees whom you want to change permissions for:</string>
+    <string name="permission_change_error">It was not possible to change permissions for this door/employee.</string>
 </resources>

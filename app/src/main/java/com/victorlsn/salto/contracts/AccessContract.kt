@@ -13,8 +13,6 @@ class AccessContract {
 
         fun onDefaultError(error: String)
 
-        fun onPermissionsChanged()
-
         fun showLoading()
 
         fun hideLoading()

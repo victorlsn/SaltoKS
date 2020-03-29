@@ -18,7 +18,7 @@ class AccessPresenter @Inject constructor(
     AccessContract.Presenter {
 
     override fun getDoors() {
-        view?.showLoading()
+//        view?.showLoading()
 
         disposable.add(
             repository.getDoors()
@@ -29,12 +29,12 @@ class AccessPresenter @Inject constructor(
     }
 
     private fun doorsRetrieved(doors: ArrayList<Door>) {
-        view?.hideLoading()
+//        view?.hideLoading()
         view?.onGetDoorsSuccess(doors)
     }
 
     override fun getEmployees() {
-        view?.showLoading()
+//        view?.showLoading()
 
         disposable.add(
             repository.getEmployees()
@@ -45,12 +45,12 @@ class AccessPresenter @Inject constructor(
     }
 
     private fun employeesRetrieved(employees: ArrayList<Employee>) {
-        view?.hideLoading()
+//        view?.hideLoading()
         view?.onGetEmployeesSuccess(employees)
     }
 
     override fun changePermission(employee: Employee, door: Door, authorized: Boolean) {
-        view?.showLoading()
+//        view?.showLoading()
 
         disposable.add(
             repository.changeEmployeePermissionForDoor(employee, door, authorized)
@@ -62,13 +62,8 @@ class AccessPresenter @Inject constructor(
 
     private fun authorizationChanged(success: Boolean) {
         Timber.d("Change Authorization call successful")
-        view?.hideLoading()
-
-        if (success) {
-            view?.onPermissionsChanged()
-        }
-        else {
-//            newDoorAddFailure(Error(context.getString(R.string.door_exists)))
+        if (!success) {
+            defaultError(Error(context.getString(R.string.permission_change_error)))
         }
     }
 

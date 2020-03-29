@@ -29,6 +29,7 @@ class AccessFragment : BaseFragment(), AccessContract.View {
 
     @Inject
     lateinit var presenter: AccessPresenter
+    private var doors: ArrayList<Door>? = null
     private var currentlySelectedDoor: Door? = null
     private var employees: ArrayList<Employee>? = null
 
@@ -100,7 +101,9 @@ class AccessFragment : BaseFragment(), AccessContract.View {
     }
 
     override fun onGetEmployeesSuccess(employees: ArrayList<Employee>) {
-        this.employees = employees
+        if (this.employees != employees) {
+            this.employees = employees
+        }
     }
 
     private fun setupEmployeesRecyclerView() {
@@ -124,11 +127,9 @@ class AccessFragment : BaseFragment(), AccessContract.View {
     }
 
     override fun onGetDoorsSuccess(doors: ArrayList<Door>) {
-        setupDoorsRecyclerView(doors)
-    }
-
-    override fun onPermissionsChanged() {
-        presenter.getDoors()
+        if (this.doors != doors) {
+            setupDoorsRecyclerView(doors)
+        }
     }
 
     override fun onDefaultError(error: String) {

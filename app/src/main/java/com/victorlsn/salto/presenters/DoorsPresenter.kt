@@ -57,7 +57,7 @@ class DoorsPresenter @Inject constructor(
             view?.onAddNewDoorSuccess()
         }
         else {
-            newDoorAddFailure(Error(context.getString(R.string.door_exists)))
+            newDoorAddFailure(Error(context.getString(R.string.door_exists_error)))
         }
     }
 
@@ -87,7 +87,7 @@ class DoorsPresenter @Inject constructor(
             view?.onRemoveDoorSuccess()
         }
         else {
-            defaultError(Error(context.getString(R.string.door_doesnt_exist)))
+            defaultError(Error(context.getString(R.string.door_does_not_exist_error)))
         }
     }
 

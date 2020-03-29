@@ -35,6 +35,7 @@ class MainActivity :
         adapter!!.addFragment(employeesFragment, "Employees")
         adapter!!.addFragment(accessFragment, "Access")
         viewpager.adapter = adapter
+        viewpager.offscreenPageLimit = 3
 
         viewpager.addOnPageChangeListener( object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
