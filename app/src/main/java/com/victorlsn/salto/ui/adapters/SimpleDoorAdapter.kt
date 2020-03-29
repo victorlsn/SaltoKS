@@ -10,10 +10,10 @@ import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.listeners.DoorSelectedListener
 import com.victorlsn.salto.util.extensions.inflate
 
-class SimpleDoorAdapter(personnel: ArrayList<Door>, private val listener: DoorSelectedListener) :
+class SimpleDoorAdapter(doors: ArrayList<Door>, private val listener: DoorSelectedListener) :
     RecyclerView.Adapter<SimpleDoorAdapter.ItemRowHolder>() {
 
-    var data: ArrayList<Door> = personnel
+    var data: ArrayList<Door> = doors
         set(value) {
             field = value
             notifyDataSetChanged()

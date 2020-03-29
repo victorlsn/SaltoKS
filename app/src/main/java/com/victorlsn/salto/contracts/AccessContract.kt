@@ -3,19 +3,17 @@ package com.victorlsn.salto.contracts
 import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.data.models.Employee
 
-class DoorsContract {
+class AccessContract {
 
     interface View :
         BaseView<Presenter> {
-        fun onAddNewDoorSuccess()
-
-        fun onAddNewDoorFailure(error: String)
-
-        fun onRemoveDoorSuccess()
+        fun onGetEmployeesSuccess(employees: ArrayList<Employee>)
 
         fun onGetDoorsSuccess(doors: ArrayList<Door>)
 
         fun onDefaultError(error: String)
+
+        fun onPermissionsChanged()
 
         fun showLoading()
 
@@ -23,10 +21,10 @@ class DoorsContract {
     }
 
     interface Presenter {
-        fun addNewDoor(name: String)
-
-        fun removeDoor(door: Door)
-
         fun getDoors()
+
+        fun getEmployees()
+
+        fun changePermission(employee: Employee, door: Door, authorized: Boolean)
     }
 }

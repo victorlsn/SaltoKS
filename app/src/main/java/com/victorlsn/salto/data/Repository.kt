@@ -76,7 +76,7 @@ class Repository @Inject constructor() {
         }
         doors.add(newDoor)
 
-        updateDoors(doors)
+        updateDoorsJson(doors)
 
         return Observable.just(true)
     }
@@ -86,7 +86,7 @@ class Repository @Inject constructor() {
         if (doors.contains(door)) {
             doors.remove(door)
 
-            updateDoors(doors)
+            updateDoorsJson(doors)
 
             return Observable.just(true)
         }
@@ -105,11 +105,50 @@ class Repository @Inject constructor() {
         return ArrayList()
     }
 
-    private fun updateDoors(doors: ArrayList<Door>) {
+    private fun updateDoor(updatedDoor: Door) : Boolean {
+        val doors = readDoors()
+        for (door in doors) {
+            if (door == updatedDoor) {
+                doors.remove(door)
+                doors.add(updatedDoor)
+
+                updateDoorsJson(doors)
+
+                return true
+            }
+        }
+
+        return false
+    }
+
+    private fun updateDoorsJson(doors: ArrayList<Door>) {
         doors.sortBy { it.name }
 
         val doorsJson = Gson().toJson(doors)
         Prefs.putString(DOORS_KEY, doorsJson)
+    }
+
+    // MARK : Access-related methods
+
+    fun changeEmployeePermissionForDoor(employee: Employee, selectedDoor: Door, authorized: Boolean) : Observable<Boolean> {
+        return if (authorized) {
+            Observable.just(addPermissionForDoor(employee, selectedDoor))
+        } else {
+            Observable.just(removePermissionForDoor(employee, selectedDoor))
+        }
+
+    }
+
+    private fun addPermissionForDoor(employee: Employee, selectedDoor: Door) : Boolean {
+        selectedDoor.addPermission(employee)
+
+        return updateDoor(selectedDoor)
+    }
+
+    private fun removePermissionForDoor(employee: Employee, selectedDoor: Door) : Boolean {
+        selectedDoor.removePermission(employee)
+
+        return updateDoor(selectedDoor)
     }
 
     companion object {

@@ -1,9 +1,12 @@
 package com.victorlsn.salto.ui.activities
 
 import android.os.Bundle
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import com.victorlsn.salto.R
 import com.victorlsn.salto.ui.adapters.PageFragmentAdapter
 import com.victorlsn.salto.ui.fragments.AccessFragment
+import com.victorlsn.salto.ui.fragments.BaseFragment
 import com.victorlsn.salto.ui.fragments.DoorsFragment
 import com.victorlsn.salto.ui.fragments.EmployeesFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +35,26 @@ class MainActivity :
         adapter!!.addFragment(employeesFragment, "Employees")
         adapter!!.addFragment(accessFragment, "Access")
         viewpager.adapter = adapter
+
+        viewpager.addOnPageChangeListener( object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                val fragment = adapter!!.getItem(position) as BaseFragment
+                fragment.resumeFragment()
+            }
+
+        })
     }
 
     private fun setupTabLayout() {
