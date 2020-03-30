@@ -39,7 +39,7 @@
         <TextView
             android:id="@+id/doorNameTextView"
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="36dp"
             android:autoSizeMaxTextSize="18sp"
             android:autoSizeMinTextSize="10sp"
             android:autoSizeStepGranularity="2sp"
@@ -55,8 +55,7 @@
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toTopOf="@id/selectionRadioButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Front door" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <RadioButton
             android:id="@+id/selectionRadioButton"
