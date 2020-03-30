@@ -2,10 +2,8 @@ package com.victorlsn.salto.presenters
 
 import android.content.Context
 import com.victorlsn.salto.R
-import com.victorlsn.salto.contracts.DoorsContract
 import com.victorlsn.salto.contracts.EventsContract
 import com.victorlsn.salto.data.Repository
-import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.data.models.LogEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

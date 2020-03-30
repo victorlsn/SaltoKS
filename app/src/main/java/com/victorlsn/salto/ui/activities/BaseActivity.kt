@@ -3,12 +3,11 @@ package com.victorlsn.salto.ui.activities
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
-import android.widget.Toast
 import com.kaopiz.kprogresshud.KProgressHUD
-import com.victorlsn.salto.ui.fragments.BaseFragment
-import com.victorlsn.salto.util.extensions.getLoading
 import com.victorlsn.salto.R
+import com.victorlsn.salto.ui.fragments.BaseFragment
 import com.victorlsn.salto.util.ToastHelper
+import com.victorlsn.salto.util.extensions.getLoading
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 

@@ -1,7 +1,6 @@
 package com.victorlsn.salto.di.components
 
 import android.app.Application
-import androidx.constraintlayout.solver.widgets.Helper
 import com.victorlsn.salto.application.App
 import com.victorlsn.salto.di.modules.ActivityBindingModule
 import com.victorlsn.salto.di.modules.ApplicationModule

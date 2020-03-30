@@ -2,11 +2,8 @@ package com.victorlsn.salto.ui.fragments
 
 import android.os.Bundle
 import com.kaopiz.kprogresshud.KProgressHUD
-import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.ui.activities.BaseActivity
-import com.victorlsn.salto.util.ToastHelper
 import dagger.android.support.DaggerFragment
-import javax.inject.Inject
 
 abstract class BaseFragment : DaggerFragment() {
     open lateinit var loading: KProgressHUD

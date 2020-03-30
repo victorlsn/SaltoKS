@@ -1,7 +1,7 @@
 package com.victorlsn.salto.data.models
 
 import java.io.Serializable
-import java.util.HashSet
+import java.util.*
 
 class Door(val name: String) : Serializable {
     val id: Int = name.hashCode()

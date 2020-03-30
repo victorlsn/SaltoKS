@@ -2,8 +2,8 @@ package com.victorlsn.salto.application
 
 import android.content.ContextWrapper
 import com.pixplicity.easyprefs.library.Prefs
-import com.victorlsn.salto.di.components.AppComponent
 import com.victorlsn.salto.BuildConfig
+import com.victorlsn.salto.di.components.AppComponent
 import com.victorlsn.salto.di.components.DaggerAppComponent
 import com.victorlsn.salto.di.modules.HelperModule
 import dagger.android.AndroidInjector
