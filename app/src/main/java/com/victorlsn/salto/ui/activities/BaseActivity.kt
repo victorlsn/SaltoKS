@@ -14,7 +14,7 @@ import javax.inject.Inject
 @SuppressLint("Registered")
 open class BaseActivity : DaggerAppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
-    var activeFragment: BaseFragment? = null
+    private var activeFragment: BaseFragment? = null
     open lateinit var loading: KProgressHUD
 
     @Inject

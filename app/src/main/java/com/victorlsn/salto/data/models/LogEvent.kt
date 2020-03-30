@@ -4,7 +4,7 @@ import com.victorlsn.salto.util.extensions.getStringInFormat
 import java.io.Serializable
 import java.util.*
 
-class LogEvent(user: User, door: Door, val success: Boolean, val date : Date = Date()) : Serializable {
+class LogEvent(user: User, door: Door, private val success: Boolean, val date : Date = Date()) : Serializable {
     private val userName = user.name
     private val doorName = door.name
 

@@ -24,10 +24,6 @@ class UsersFragment : BaseFragment(), UsersContract.View {
     @Inject
     lateinit var toastHelper : ToastHelper
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onResume() {
         super.onResume()
         presenter.attachView(this)
@@ -72,7 +68,7 @@ class UsersFragment : BaseFragment(), UsersContract.View {
         nameInputLayout.error = null
 
         presenter.getUsers()
-        toastHelper.showToast(context, "User added successfully")
+        toastHelper.showToast(context, getString(R.string.user_added))
     }
 
     override fun onAddNewUserFailure(error: String) {
@@ -81,7 +77,7 @@ class UsersFragment : BaseFragment(), UsersContract.View {
 
     override fun onRemoveUserSuccess() {
         presenter.getUsers()
-        toastHelper.showToast(context, "User removed successfully")
+        toastHelper.showToast(context, getString(R.string.user_removed))
     }
 
     override fun onGetUsersSuccess(users: ArrayList<User>) {

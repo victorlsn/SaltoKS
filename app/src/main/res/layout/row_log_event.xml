@@ -33,7 +33,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
             android:gravity="center_vertical"
-            android:text="Victor Negrão tried to open Front Door at 12/04/2020 16:30 but didn't have permission to do so."
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

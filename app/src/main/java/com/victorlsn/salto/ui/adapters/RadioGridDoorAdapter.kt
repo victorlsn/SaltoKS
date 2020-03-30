@@ -49,7 +49,7 @@ class RadioGridDoorAdapter(
 
     class ItemHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var doorName: TextView = itemView.findViewById(R.id.doorNameTextView)
-        var radioButton: RadioButton = itemView.findViewById(R.id.selectionRadioButton)
+        private var radioButton: RadioButton = itemView.findViewById(R.id.selectionRadioButton)
 
         fun bind(door: Door) {
             doorName.text = door.name

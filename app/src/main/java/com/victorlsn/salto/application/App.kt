@@ -11,7 +11,7 @@ import dagger.android.DaggerApplication
 import timber.log.Timber
 
 class App : DaggerApplication() {
-    var appComponent: AppComponent? = null
+    private var appComponent: AppComponent? = null
 
     override fun onCreate() {
         super.onCreate()

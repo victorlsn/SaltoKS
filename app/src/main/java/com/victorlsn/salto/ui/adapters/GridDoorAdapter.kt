@@ -48,7 +48,7 @@ class GridDoorAdapter(
 
     class ItemHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var doorName: TextView = itemView.findViewById(R.id.doorNameTextView)
-        var selectionFilter: View = itemView.findViewById(R.id.doorSelectionForeground)
+        private var selectionFilter: View = itemView.findViewById(R.id.doorSelectionForeground)
 
         fun bind(door: Door) {
             doorName.text = door.name

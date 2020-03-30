@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Salto</string>
     <string name="press_back_again">Press back again to exit</string>
-    <string name="add_users">Add Users</string>
-    <string name="add_doors">Add Doors</string>
     <string name="name">Name</string>
     <string name="add_user">Add user</string>
     <string name="add_door">Add door</string>
@@ -21,5 +19,7 @@
     <string name="green_color">#FF99CC00</string>
     <string name="red_color">#FFFF4444</string>
     <string name="blue_color">#FF33B5E5</string>
+    <string name="user_added">User added successfully.</string>
+    <string name="user_removed">User removed successfully.</string>
 
 </resources>
