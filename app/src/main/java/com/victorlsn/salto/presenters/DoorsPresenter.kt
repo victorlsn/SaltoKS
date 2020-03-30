@@ -51,9 +51,8 @@ class DoorsPresenter @Inject constructor(
 
     private fun newDoorAddedSuccessfully(success: Boolean) {
         Timber.d("Add Door call successful")
-        view?.hideLoading()
-
         if (success) {
+            view?.hideLoading()
             view?.onAddNewDoorSuccess()
         }
         else {
@@ -85,8 +84,7 @@ class DoorsPresenter @Inject constructor(
 
         if (success) {
             view?.onRemoveDoorSuccess()
-        }
-        else {
+        } else {
             defaultError(Error(context.getString(R.string.door_does_not_exist_error)))
         }
     }

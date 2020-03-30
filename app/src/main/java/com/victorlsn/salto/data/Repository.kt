@@ -47,7 +47,7 @@ class Repository @Inject constructor() {
     private fun readUsers() : ArrayList<User> {
         val usersJson = Prefs.getString(USERS_KEY, null)
 
-        usersJson?.let {
+        if (usersJson.isNotEmpty()) {
             val itemType = object : TypeToken<java.util.ArrayList<User>>() {}.type
 
             return Gson().fromJson(usersJson, itemType)
@@ -97,7 +97,7 @@ class Repository @Inject constructor() {
     private fun readDoors() : ArrayList<Door> {
         val doorsJson = Prefs.getString(DOORS_KEY, null)
 
-        doorsJson?.let {
+        if (doorsJson.isNotEmpty()) {
             val itemType = object : TypeToken<java.util.ArrayList<Door>>() {}.type
 
             return Gson().fromJson(doorsJson, itemType)
@@ -188,7 +188,7 @@ class Repository @Inject constructor() {
     private fun readEventLog() : ArrayList<LogEvent> {
         val logsJson = Prefs.getString(LOGS_KEY, null)
 
-        logsJson?.let {
+        if (logsJson.isNotEmpty()) {
             val itemType = object : TypeToken<java.util.ArrayList<LogEvent>>() {}.type
 
             return Gson().fromJson(logsJson, itemType)
@@ -202,6 +202,14 @@ class Repository @Inject constructor() {
 
         val logsJson = Gson().toJson(logs)
         Prefs.putString(LOGS_KEY, logsJson)
+    }
+
+    // MARK : Test helpers methods
+
+    fun clearSharedPrefs() {
+        Prefs.putString(USERS_KEY, "")
+        Prefs.putString(DOORS_KEY, "")
+        Prefs.putString(LOGS_KEY, "")
     }
 
 
