@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity :
     BaseActivity() {
-//    private val fragmentManager = supportFragmentManager
     private var adapter: PageFragmentAdapter? = null
 
     private var doorsFragment = DoorsFragment()

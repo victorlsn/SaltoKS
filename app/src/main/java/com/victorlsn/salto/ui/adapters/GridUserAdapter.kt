@@ -25,6 +25,9 @@ class GridUserAdapter(private val door: Door,
         val user = users[position]
         val hasPermission = door.isUserAuthorized(user)
         holder.bind(user, hasPermission)
+        holder.itemView.setOnClickListener {
+            holder.permissionCheckBox.isChecked = !holder.permissionCheckBox.isChecked
+        }
         holder.permissionCheckBox.setOnCheckedChangeListener { _, isChecked ->
             listener.onUserAuthorizationChanged(user, isChecked)
         }

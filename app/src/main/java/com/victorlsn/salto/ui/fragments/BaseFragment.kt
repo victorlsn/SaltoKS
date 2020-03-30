@@ -2,8 +2,11 @@ package com.victorlsn.salto.ui.fragments
 
 import android.os.Bundle
 import com.kaopiz.kprogresshud.KProgressHUD
+import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.ui.activities.BaseActivity
+import com.victorlsn.salto.util.ToastHelper
 import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
 abstract class BaseFragment : DaggerFragment() {
     open lateinit var loading: KProgressHUD
@@ -39,17 +42,5 @@ abstract class BaseFragment : DaggerFragment() {
         }
 
         return false
-    }
-
-    fun clearChildFragmentManager() {
-        for (fragment in childFragmentManager.fragments) {
-            childFragmentManager.beginTransaction().remove(fragment).commit()
-        }
-    }
-
-    fun clearFragmentManager() {
-        for (fragment in fragmentManager!!.fragments) {
-            fragmentManager!!.beginTransaction().remove(fragment).commit()
-        }
     }
 }

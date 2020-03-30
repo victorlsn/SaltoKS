@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.DoorsContract
@@ -12,6 +11,7 @@ import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.listeners.DoorSelectedListener
 import com.victorlsn.salto.presenters.DoorsPresenter
 import com.victorlsn.salto.ui.adapters.SimpleDoorAdapter
+import com.victorlsn.salto.util.ToastHelper
 import kotlinx.android.synthetic.main.fragment_doors.*
 import javax.inject.Inject
 
@@ -21,9 +21,8 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
     @Inject
     lateinit var presenter: DoorsPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    @Inject
+    lateinit var toastHelper: ToastHelper
 
     override fun onResume() {
         super.onResume()
@@ -36,7 +35,11 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
         presenter.detachView()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_doors, container, false)
     }
 
@@ -69,7 +72,7 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
         nameInputLayout.error = null
 
         presenter.getDoors()
-        Toast.makeText(context!!, "Door added successfully", Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context, "Door added successfully")
     }
 
     override fun onAddNewDoorFailure(error: String) {
@@ -78,7 +81,7 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
 
     override fun onRemoveDoorSuccess() {
         presenter.getDoors()
-        Toast.makeText(context!!, "Door removed successfully", Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context, "Door removed successfully")
     }
 
     override fun onGetDoorsSuccess(doors: ArrayList<Door>) {
@@ -86,7 +89,7 @@ class DoorsFragment : BaseFragment(), DoorsContract.View {
     }
 
     override fun onDefaultError(error: String) {
-        Toast.makeText(context!!, error, Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context, error)
     }
 
     override fun showLoading() {

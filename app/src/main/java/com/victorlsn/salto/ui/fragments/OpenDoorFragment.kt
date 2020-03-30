@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.OpenDoorsContract
@@ -13,11 +12,10 @@ import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.data.models.User
 import com.victorlsn.salto.listeners.DoorSelectedListener
 import com.victorlsn.salto.listeners.UserSelectedListener
-import com.victorlsn.salto.presenters.AccessPresenter
 import com.victorlsn.salto.presenters.OpenDoorsPresenter
 import com.victorlsn.salto.ui.adapters.RadioGridDoorAdapter
 import com.victorlsn.salto.ui.adapters.RadioGridUserAdapter
-import kotlinx.android.synthetic.main.fragment_access.*
+import com.victorlsn.salto.util.ToastHelper
 import kotlinx.android.synthetic.main.fragment_access.doorsRecyclerView
 import kotlinx.android.synthetic.main.fragment_access.doorsTextView
 import kotlinx.android.synthetic.main.fragment_access.usersRecyclerView
@@ -33,6 +31,9 @@ class OpenDoorFragment : BaseFragment(), OpenDoorsContract.View {
 
     @Inject
     lateinit var presenter: OpenDoorsPresenter
+
+    @Inject
+    lateinit var toastHelper: ToastHelper
 
     private var doors: ArrayList<Door>? = null
     private var currentlySelectedDoor: Door? = null
@@ -145,17 +146,21 @@ class OpenDoorFragment : BaseFragment(), OpenDoorsContract.View {
     }
 
     override fun onOpenDoor(success: Boolean) {
-        // TODO Add animation for door opening/not opening
         if (success) {
-            Toast.makeText(context, "${currentlySelectedUser!!.name} opened ${currentlySelectedDoor!!.name}.", Toast.LENGTH_SHORT).show()
-        }
-        else {
-            Toast.makeText(context, "${currentlySelectedUser!!.name} tried to open ${currentlySelectedDoor!!.name}, but has no permission.", Toast.LENGTH_SHORT).show()
+            toastHelper.showToast(
+                context,
+                "${currentlySelectedUser!!.name} opened ${currentlySelectedDoor!!.name}."
+            )
+        } else {
+            toastHelper.showToast(
+                context,
+                "${currentlySelectedUser!!.name} tried to open ${currentlySelectedDoor!!.name}, but has no permission."
+            )
         }
     }
 
     override fun onDefaultError(error: String) {
-        Toast.makeText(context!!, error, Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context!!, error)
     }
 
     override fun showLoading() {

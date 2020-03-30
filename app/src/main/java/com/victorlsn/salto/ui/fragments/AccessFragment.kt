@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.AccessContract
@@ -16,6 +15,7 @@ import com.victorlsn.salto.listeners.UserAuthorizedListener
 import com.victorlsn.salto.presenters.AccessPresenter
 import com.victorlsn.salto.ui.adapters.GridDoorAdapter
 import com.victorlsn.salto.ui.adapters.GridUserAdapter
+import com.victorlsn.salto.util.ToastHelper
 import kotlinx.android.synthetic.main.fragment_access.*
 import javax.inject.Inject
 
@@ -27,6 +27,9 @@ class AccessFragment : BaseFragment(), AccessContract.View {
 
     @Inject
     lateinit var presenter: AccessPresenter
+
+    @Inject
+    lateinit var toastHelper: ToastHelper
 
     private var doors: ArrayList<Door>? = null
     private var currentlySelectedDoor: Door? = null
@@ -49,8 +52,7 @@ class AccessFragment : BaseFragment(), AccessContract.View {
         this.doors = doors
         if (doors.isEmpty()) {
             doorsTextView.text = getString(R.string.no_doors_text)
-        }
-        else {
+        } else {
             doorsTextView.text = getString(R.string.doors_access_text)
         }
         setupDoorsRecyclerView()
@@ -74,7 +76,8 @@ class AccessFragment : BaseFragment(), AccessContract.View {
         doorsRecyclerView.layoutManager = layoutManager
         doorsRecyclerView.adapter = gridDoorAdapter
 
-        doorsRecyclerView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        doorsRecyclerView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 doorsRecyclerView.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 autoSelectPreviouslySelectedDoor()
@@ -102,8 +105,7 @@ class AccessFragment : BaseFragment(), AccessContract.View {
         this.users = users
         if (users.isEmpty()) {
             usersTextView.text = getString(R.string.no_users_text)
-        }
-        else {
+        } else {
             usersTextView.text = getString(R.string.users_access_text)
         }
         if (currentlySelectedDoor != null) {
@@ -138,7 +140,7 @@ class AccessFragment : BaseFragment(), AccessContract.View {
     }
 
     override fun onDefaultError(error: String) {
-        Toast.makeText(context!!, error, Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context, error)
     }
 
     override fun showLoading() {

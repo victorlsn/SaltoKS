@@ -12,6 +12,7 @@ import com.victorlsn.salto.data.models.User
 import com.victorlsn.salto.listeners.UserSelectedListener
 import com.victorlsn.salto.presenters.UsersPresenter
 import com.victorlsn.salto.ui.adapters.SimpleUserAdapter
+import com.victorlsn.salto.util.ToastHelper
 import kotlinx.android.synthetic.main.fragment_users.*
 import javax.inject.Inject
 
@@ -20,6 +21,9 @@ class UsersFragment : BaseFragment(), UsersContract.View {
 
     @Inject
     lateinit var presenter: UsersPresenter
+
+    @Inject
+    lateinit var toastHelper : ToastHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +73,7 @@ class UsersFragment : BaseFragment(), UsersContract.View {
         nameInputLayout.error = null
 
         presenter.getUsers()
-        Toast.makeText(context!!, "User added successfully", Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context, "User added successfully")
     }
 
     override fun onAddNewUserFailure(error: String) {
@@ -78,7 +82,7 @@ class UsersFragment : BaseFragment(), UsersContract.View {
 
     override fun onRemoveUserSuccess() {
         presenter.getUsers()
-        Toast.makeText(context!!, "User removed successfully", Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context, "User removed successfully")
     }
 
     override fun onGetUsersSuccess(users: ArrayList<User>) {
@@ -86,7 +90,7 @@ class UsersFragment : BaseFragment(), UsersContract.View {
     }
 
     override fun onDefaultError(error: String) {
-        Toast.makeText(context!!, error, Toast.LENGTH_SHORT).show()
+        toastHelper.showToast(context, error)
     }
 
     override fun showLoading() {

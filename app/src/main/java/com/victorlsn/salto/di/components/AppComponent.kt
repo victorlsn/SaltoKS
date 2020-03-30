@@ -1,9 +1,11 @@
 package com.victorlsn.salto.di.components
 
 import android.app.Application
+import androidx.constraintlayout.solver.widgets.Helper
 import com.victorlsn.salto.application.App
 import com.victorlsn.salto.di.modules.ActivityBindingModule
 import com.victorlsn.salto.di.modules.ApplicationModule
+import com.victorlsn.salto.di.modules.HelperModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -15,6 +17,7 @@ import javax.inject.Singleton
     modules = [
         ApplicationModule::class,
         ActivityBindingModule::class,
+        HelperModule::class,
         AndroidSupportInjectionModule::class
     ]
 )
@@ -24,6 +27,8 @@ interface AppComponent : AndroidInjector<App> {
     interface Builder {
         @BindsInstance
         fun application(application: Application): Builder
+
+        fun helperModule(helperModule: HelperModule): Builder
 
         fun build(): AppComponent
     }

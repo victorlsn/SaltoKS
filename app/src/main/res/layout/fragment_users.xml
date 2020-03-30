@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/name"
+            android:imeOptions="actionDone"
             android:inputType="textPersonName"
             android:textSize="18sp" />
 
@@ -42,7 +43,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintWidth_percent="0.6"
         app:layout_constraintHeight_percent="0.08"
-        android:background="@drawable/white_stroked_rounded_corners_blue_bg"
+        android:background="@drawable/ripple_white_stroked_rounded_corners_blue_bg"
         />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -53,8 +54,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
