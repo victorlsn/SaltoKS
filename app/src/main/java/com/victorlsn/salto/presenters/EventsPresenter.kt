@@ -17,8 +17,6 @@ class EventsPresenter @Inject constructor(
     EventsContract.Presenter {
 
     override fun getEventLog() {
-        view?.showLoading()
-
         disposable.add(
             repository.getEventLog()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -28,7 +26,6 @@ class EventsPresenter @Inject constructor(
     }
 
     private fun eventLogRetrieved(events: ArrayList<LogEvent>) {
-        view?.hideLoading()
         if (events.isEmpty()) {
             defaultError(Error(context.getString(R.string.empty_log)))
         }
@@ -38,7 +35,6 @@ class EventsPresenter @Inject constructor(
     private fun defaultError(error: Throwable) {
         Timber.e(error)
 
-        view?.hideLoading()
         view?.onDefaultError(error.message!!)
     }
 }

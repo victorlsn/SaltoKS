@@ -34,7 +34,7 @@ class MainActivity :
         adapter!!.addFragment(openDoorFragment, "Open Door")
         adapter!!.addFragment(eventsFragment, "Event Log")
         viewpager.adapter = adapter
-        viewpager.offscreenPageLimit = 3
+        viewpager.offscreenPageLimit = 4
 
         viewpager.addOnPageChangeListener( object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
