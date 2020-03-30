@@ -1,11 +1,22 @@
 package com.victorlsn.salto.ui.fragments
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.ChangeImageTransform
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.OpenDoorsContract
 import com.victorlsn.salto.data.models.Door
@@ -147,16 +158,41 @@ class OpenDoorFragment : BaseFragment(), OpenDoorsContract.View {
 
     override fun onOpenDoor(success: Boolean) {
         if (success) {
-            toastHelper.showToast(
-                context,
-                "${currentlySelectedUser!!.name} opened ${currentlySelectedDoor!!.name}."
-            )
+            morphButton(R.string.green_color, R.drawable.ic_keyhole_to_success, R.drawable.ic_success_to_keyhole)
+            showDoorOpeningMessage("${currentlySelectedUser!!.name} opened ${currentlySelectedDoor!!.name}.", R.string.green_color)
         } else {
-            toastHelper.showToast(
-                context,
-                "${currentlySelectedUser!!.name} tried to open ${currentlySelectedDoor!!.name}, but has no permission."
-            )
+            morphButton(R.string.red_color, R.drawable.ic_keyhole_to_error, R.drawable.ic_error_to_keyhole)
+            showDoorOpeningMessage("${currentlySelectedUser!!.name} tried to open ${currentlySelectedDoor!!.name}, but has no permission.", R.string.red_color)
         }
+    }
+
+    private fun morphButton(backgroundColorResource: Int, firstAvdResource : Int, secondAvdResource: Int) {
+        var backgroundColor = Color.parseColor(getString(backgroundColorResource))
+        openDoorButton.setAvdFirst(AnimatedVectorDrawableCompat.create(context!!, firstAvdResource)!!)
+        openDoorButton.setAvdSecond(AnimatedVectorDrawableCompat.create(context!!, secondAvdResource)!!)
+        openDoorButton.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+        openDoorButton.morph()
+        openDoorButton.isClickable = false
+
+        Handler().postDelayed({
+            backgroundColor = Color.parseColor(getString(R.string.blue_color))
+            openDoorButton.backgroundTintList = ColorStateList.valueOf(backgroundColor)
+
+            openDoorButton.morph()
+            openDoorButton.isClickable = true
+        }, 2000)
+    }
+
+    private fun showDoorOpeningMessage(message: String, color: Int) {
+        TransitionManager.beginDelayedTransition(mainContainer)
+        doorOpeningDescription.visibility = View.VISIBLE
+        val textColor = Color.parseColor(getString(color))
+        doorOpeningDescription.text = message
+        doorOpeningDescription.setTextColor(ColorStateList.valueOf(textColor))
+
+        Handler().postDelayed({
+            doorOpeningDescription.visibility = View.INVISIBLE
+        }, 2000)
     }
 
     override fun onDefaultError(error: String) {

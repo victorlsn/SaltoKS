@@ -18,4 +18,8 @@
     <string name="select_door">Select the door you wish to open:</string>
     <string name="empty_log">There are no events recorded</string>
     <string name="must_select_user_and_door">You must select a user and a door.</string>
+    <string name="green_color">#FF99CC00</string>
+    <string name="red_color">#FFFF4444</string>
+    <string name="blue_color">#FF33B5E5</string>
+
 </resources>

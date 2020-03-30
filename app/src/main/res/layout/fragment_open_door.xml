@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:id="@+id/mainContainer"
+    android:animateLayoutChanges="true"
     tools:context=".ui.activities.MainActivity">
     <ScrollView
         android:id="@+id/scrollView"
@@ -19,8 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:paddingTop="16dp"
-            android:paddingBottom="32dp">
+            android:paddingBottom="16dp">
 
             <TextView
                 android:id="@+id/usersTextView"
@@ -76,23 +76,41 @@
 
     </ScrollView>
 
-    <Button
+    <com.akaita.android.morphview.MorphView
         android:id="@+id/openDoorButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/doorOpeningDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginTop="24dp"
-        app:layout_constraintVertical_bias="0"
         app:layout_constraintTop_toBottomOf="@id/scrollView"
-        android:text="@string/open_door"
+        app:layout_constraintHeight_percent="0.16"
+        app:layout_constraintDimensionRatio="1:1"
+        android:background="@drawable/circular_bg"
+        android:backgroundTint="@android:color/holo_blue_light"
+        app:avdFirst="@drawable/ic_keyhole_to_error"
+        app:avdSecond="@drawable/ic_keyhole_to_error"
+        />
+
+    <TextView
+        android:id="@+id/doorOpeningDescription"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:textSize="18sp"
+        android:text="Gege has tried to open the door, but has no permission"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:visibility="invisible"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
-        app:layout_constraintWidth_percent="0.6"
-        app:layout_constraintHeight_percent="0.08"
-        android:background="@drawable/ripple_white_stroked_rounded_corners_blue_bg" />
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="12dp"
+        />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
