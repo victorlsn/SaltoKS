@@ -9,4 +9,4 @@ It has 4 main features:
 
 To install it, you just need to clone the project on Android Studio and install the app on a Android device with version 21 (Lollipop) or superior.
 
-At the following link, you can see a small video of the application: https://drive.google.com/open?id=1XB53rD2-kQi4vVrdZp2xqgRjoqiFWaaT
+At the following link, you can see a small video of the application: https://drive.google.com/open?id=1Xd4IDv6EkAmxLsW69C_jgxco64az-KxH
