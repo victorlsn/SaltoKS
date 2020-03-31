@@ -9,7 +9,7 @@ class LogEvent(user: User, door: Door, private val success: Boolean, val date : 
     private val doorName = door.name
 
     fun getEventString() : String {
-        var eventString = "$userName tried to open $doorName on ${date.getStringInFormat("dd/MM/yyyy HH:mm")}"
+        var eventString = "${date.getStringInFormat("dd/MM/yyyy HH:mm")} - $userName tried to open $doorName"
         eventString = if (success) {
             "$eventString and was successful."
         } else {
