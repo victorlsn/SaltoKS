@@ -45,7 +45,7 @@ class EventsFragment : BaseFragment(), EventsContract.View {
         eventsRecyclerView.adapter = adapter
     }
 
-    override fun onDefaultError(error: String) {
+    override fun onDefaultError() {
         emptyLogTextView.visibility = View.VISIBLE
     }
 
@@ -53,17 +53,4 @@ class EventsFragment : BaseFragment(), EventsContract.View {
         emptyLogTextView.visibility = View.GONE
         setupRecyclerView(events)
     }
-
-    override fun showLoading() {
-        if (!loading.isShowing) {
-            loading.show()
-        }
-    }
-
-    override fun hideLoading() {
-        if (loading.isShowing) {
-            loading.dismiss()
-        }
-    }
-
 }

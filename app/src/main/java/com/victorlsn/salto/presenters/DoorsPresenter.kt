@@ -1,17 +1,14 @@
 package com.victorlsn.salto.presenters
 
-import android.content.Context
-import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.DoorsContract
 import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.data.models.Door
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.victorlsn.salto.util.BaseSchedulerProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class DoorsPresenter @Inject constructor(
-    private val context: Context,
+    private val scheduler: BaseSchedulerProvider,
     private val repository: Repository
 ) : BasePresenter<DoorsContract.View>(),
     DoorsContract.Presenter {
@@ -21,8 +18,8 @@ class DoorsPresenter @Inject constructor(
 
         disposable.add(
             repository.getDoors()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::doorsRetrieved, this::defaultError)
         )
     }
@@ -43,20 +40,18 @@ class DoorsPresenter @Inject constructor(
 
         disposable.add(
             repository.addDoor(door)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::newDoorAddedSuccessfully, this::newDoorAddFailure)
         )
     }
 
     private fun newDoorAddedSuccessfully(success: Boolean) {
-        Timber.d("Add Door call successful")
         if (success) {
             view?.hideLoading()
             view?.onAddNewDoorSuccess()
-        }
-        else {
-            newDoorAddFailure(Error(context.getString(R.string.door_exists_error)))
+        } else {
+            newDoorAddFailure(Error("A door with that name already exists."))
         }
     }
 
@@ -72,20 +67,18 @@ class DoorsPresenter @Inject constructor(
 
         disposable.add(
             repository.removeDoor(door)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::doorRemovedSuccessfully, this::defaultError)
         )
     }
 
     private fun doorRemovedSuccessfully(success: Boolean) {
-        Timber.d("Remove door call successful")
-        view?.hideLoading()
-
         if (success) {
+            view?.hideLoading()
             view?.onRemoveDoorSuccess()
         } else {
-            defaultError(Error(context.getString(R.string.door_does_not_exist_error)))
+            defaultError(Error("This door doesn't exist anymore."))
         }
     }
 

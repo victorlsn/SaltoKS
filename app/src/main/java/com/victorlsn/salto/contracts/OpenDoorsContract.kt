@@ -14,10 +14,6 @@ class OpenDoorsContract {
         fun onOpenDoor(success: Boolean)
 
         fun onDefaultError(error: String)
-
-        fun showLoading()
-
-        fun hideLoading()
     }
 
     interface Presenter {

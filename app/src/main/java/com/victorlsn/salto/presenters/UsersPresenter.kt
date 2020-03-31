@@ -3,12 +3,12 @@ package com.victorlsn.salto.presenters
 import com.victorlsn.salto.contracts.UsersContract
 import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.data.models.User
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.victorlsn.salto.util.BaseSchedulerProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class UsersPresenter @Inject constructor(
+    private val scheduler: BaseSchedulerProvider,
     private val repository: Repository
 ) : BasePresenter<UsersContract.View>(),
     UsersContract.Presenter {
@@ -18,8 +18,8 @@ class UsersPresenter @Inject constructor(
 
         disposable.add(
             repository.getUsers()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::usersRetrieved, this::defaultError)
         )
     }
@@ -40,21 +40,19 @@ class UsersPresenter @Inject constructor(
 
         disposable.add(
             repository.addUser(user)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::newUserAddedSuccessfully, this::newUserAddFailure)
         )
     }
 
     private fun newUserAddedSuccessfully(success: Boolean) {
-        Timber.d("Add User call successful")
-        view?.hideLoading()
-
         if (success) {
+            view?.hideLoading()
             view?.onAddNewUserSuccess()
         }
         else {
-            newUserAddFailure(Error("An user with that name already exists."))
+            newUserAddFailure(Error("A user with that name already exists."))
         }
     }
 
@@ -70,17 +68,15 @@ class UsersPresenter @Inject constructor(
 
         disposable.add(
             repository.removeUser(user)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::userRemovedSuccessfully, this::defaultError)
         )
     }
 
     private fun userRemovedSuccessfully(success: Boolean) {
-        Timber.d("Remove user call successful")
-        view?.hideLoading()
-
         if (success) {
+            view?.hideLoading()
             view?.onRemoveUserSuccess()
         }
         else {

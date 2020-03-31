@@ -1,17 +1,14 @@
 package com.victorlsn.salto.presenters
 
-import android.content.Context
-import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.EventsContract
 import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.data.models.LogEvent
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.victorlsn.salto.util.BaseSchedulerProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class EventsPresenter @Inject constructor(
-    private val context: Context,
+    private val scheduler: BaseSchedulerProvider,
     private val repository: Repository
 ) : BasePresenter<EventsContract.View>(),
     EventsContract.Presenter {
@@ -19,15 +16,15 @@ class EventsPresenter @Inject constructor(
     override fun getEventLog() {
         disposable.add(
             repository.getEventLog()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::eventLogRetrieved, this::defaultError)
         )
     }
 
     private fun eventLogRetrieved(events: ArrayList<LogEvent>) {
         if (events.isEmpty()) {
-            defaultError(Error(context.getString(R.string.empty_log)))
+            defaultError(Error("There are no events recorded."))
         }
         view?.onEventLogRetrieved(events)
     }
@@ -35,6 +32,6 @@ class EventsPresenter @Inject constructor(
     private fun defaultError(error: Throwable) {
         Timber.e(error)
 
-        view?.onDefaultError(error.message!!)
+        view?.onDefaultError()
     }
 }

@@ -221,16 +221,4 @@ class OpenDoorFragment : BaseFragment(), OpenDoorsContract.View {
         toastHelper.showToast(context!!, error)
     }
 
-    override fun showLoading() {
-        if (!loading.isShowing) {
-            loading.show()
-        }
-    }
-
-    override fun hideLoading() {
-        if (loading.isShowing) {
-            loading.dismiss()
-        }
-    }
-
 }

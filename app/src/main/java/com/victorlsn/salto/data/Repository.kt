@@ -1,26 +1,25 @@
 package com.victorlsn.salto.data
 
+import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.pixplicity.easyprefs.library.Prefs
 import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.data.models.LogEvent
 import com.victorlsn.salto.data.models.User
+import com.victorlsn.salto.util.extensions.putString
 import io.reactivex.Observable
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class Repository @Inject constructor() {
+class Repository @Inject constructor(private val sharedPreferences: SharedPreferences) {
 
     // MARK : User-related methods
 
-    fun getUsers() : Observable<ArrayList<User>> {
+    fun getUsers(): Observable<ArrayList<User>> {
         val users = readUsers()
         return Observable.just(users)
     }
 
-    fun addUser(newUser : User) : Observable<Boolean> {
+    fun addUser(newUser: User): Observable<Boolean> {
         val users = readUsers()
         if (users.contains(newUser)) {
             return Observable.just(false)
@@ -32,7 +31,7 @@ class Repository @Inject constructor() {
         return Observable.just(true)
     }
 
-    fun removeUser(user: User) : Observable<Boolean> {
+    fun removeUser(user: User): Observable<Boolean> {
         val users = readUsers()
         if (users.contains(user)) {
             users.remove(user)
@@ -44,10 +43,10 @@ class Repository @Inject constructor() {
         return Observable.just(false)
     }
 
-    private fun readUsers() : ArrayList<User> {
-        val usersJson = Prefs.getString(USERS_KEY, null)
+    private fun readUsers(): ArrayList<User> {
+        val usersJson = sharedPreferences.getString(USERS_KEY, null)
 
-        if (usersJson.isNotEmpty()) {
+        if (!usersJson.isNullOrEmpty()) {
             val itemType = object : TypeToken<java.util.ArrayList<User>>() {}.type
 
             return Gson().fromJson(usersJson, itemType)
@@ -60,17 +59,17 @@ class Repository @Inject constructor() {
         users.sortBy { it.name }
 
         val usersJson = Gson().toJson(users)
-        Prefs.putString(USERS_KEY, usersJson)
+        sharedPreferences.putString(USERS_KEY, usersJson)
     }
 
     // MARK : Doors-related methods
 
-    fun getDoors() : Observable<ArrayList<Door>> {
+    fun getDoors(): Observable<ArrayList<Door>> {
         val doors = readDoors()
         return Observable.just(doors)
     }
 
-    fun addDoor(newDoor: Door) : Observable<Boolean> {
+    fun addDoor(newDoor: Door): Observable<Boolean> {
         val doors = readDoors()
         if (doors.contains(newDoor)) {
             return Observable.just(false)
@@ -82,7 +81,7 @@ class Repository @Inject constructor() {
         return Observable.just(true)
     }
 
-    fun removeDoor(door: Door) : Observable<Boolean> {
+    fun removeDoor(door: Door): Observable<Boolean> {
         val doors = readDoors()
         if (doors.contains(door)) {
             doors.remove(door)
@@ -94,10 +93,10 @@ class Repository @Inject constructor() {
         return Observable.just(false)
     }
 
-    private fun readDoors() : ArrayList<Door> {
-        val doorsJson = Prefs.getString(DOORS_KEY, null)
+    private fun readDoors(): ArrayList<Door> {
+        val doorsJson = sharedPreferences.getString(DOORS_KEY, null)
 
-        if (doorsJson.isNotEmpty()) {
+        if (!doorsJson.isNullOrEmpty()) {
             val itemType = object : TypeToken<java.util.ArrayList<Door>>() {}.type
 
             return Gson().fromJson(doorsJson, itemType)
@@ -106,7 +105,7 @@ class Repository @Inject constructor() {
         return ArrayList()
     }
 
-    private fun updateDoor(updatedDoor: Door) : Boolean {
+    private fun updateDoor(updatedDoor: Door): Boolean {
         val doors = readDoors()
         for (door in doors) {
             if (door == updatedDoor) {
@@ -126,12 +125,16 @@ class Repository @Inject constructor() {
         doors.sortBy { it.name }
 
         val doorsJson = Gson().toJson(doors)
-        Prefs.putString(DOORS_KEY, doorsJson)
+        sharedPreferences.putString(DOORS_KEY, doorsJson)
     }
 
     // MARK : Access-related methods
 
-    fun changeUserPermissionForDoor(user: User, selectedDoor: Door, authorized: Boolean) : Observable<Boolean> {
+    fun changeUserPermissionForDoor(
+        user: User,
+        selectedDoor: Door,
+        authorized: Boolean
+    ): Observable<Boolean> {
         return if (authorized) {
             Observable.just(addPermissionForDoor(user, selectedDoor))
         } else {
@@ -140,13 +143,13 @@ class Repository @Inject constructor() {
 
     }
 
-    private fun addPermissionForDoor(user: User, selectedDoor: Door) : Boolean {
+    private fun addPermissionForDoor(user: User, selectedDoor: Door): Boolean {
         selectedDoor.addPermission(user)
 
         return updateDoor(selectedDoor)
     }
 
-    private fun removePermissionForDoor(user: User, selectedDoor: Door) : Boolean {
+    private fun removePermissionForDoor(user: User, selectedDoor: Door): Boolean {
         selectedDoor.removePermission(user)
 
         return updateDoor(selectedDoor)
@@ -154,7 +157,7 @@ class Repository @Inject constructor() {
 
     // MARK : Door opening related methods
 
-    fun openDoor(user: User, door: Door) : Observable<Boolean> {
+    fun openDoor(door: Door, user: User): Observable<Boolean> {
         var success = false
         val doors = readDoors()
         for (actualDoor in doors) {
@@ -170,7 +173,7 @@ class Repository @Inject constructor() {
 
     // MARK : Log related methods
 
-    fun getEventLog() : Observable<ArrayList<LogEvent>> {
+    fun getEventLog(): Observable<ArrayList<LogEvent>> {
         return Observable.just(readEventLog())
     }
 
@@ -185,10 +188,10 @@ class Repository @Inject constructor() {
         updateEventLogJson(logs)
     }
 
-    private fun readEventLog() : ArrayList<LogEvent> {
-        val logsJson = Prefs.getString(LOGS_KEY, null)
+    private fun readEventLog(): ArrayList<LogEvent> {
+        val logsJson = sharedPreferences.getString(LOGS_KEY, null)
 
-        if (logsJson.isNotEmpty()) {
+        if (!logsJson.isNullOrEmpty()) {
             val itemType = object : TypeToken<java.util.ArrayList<LogEvent>>() {}.type
 
             return Gson().fromJson(logsJson, itemType)
@@ -201,15 +204,15 @@ class Repository @Inject constructor() {
         logs.sortBy { it.date }
 
         val logsJson = Gson().toJson(logs)
-        Prefs.putString(LOGS_KEY, logsJson)
+        sharedPreferences.putString(LOGS_KEY, logsJson)
     }
 
     // MARK : Test helpers methods
 
     fun clearSharedPrefs() {
-        Prefs.putString(USERS_KEY, "")
-        Prefs.putString(DOORS_KEY, "")
-        Prefs.putString(LOGS_KEY, "")
+        sharedPreferences.putString(USERS_KEY, "")
+        sharedPreferences.putString(DOORS_KEY, "")
+        sharedPreferences.putString(LOGS_KEY, "")
     }
 
 

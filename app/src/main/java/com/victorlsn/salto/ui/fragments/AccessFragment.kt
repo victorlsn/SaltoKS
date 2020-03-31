@@ -142,17 +142,4 @@ class AccessFragment : BaseFragment(), AccessContract.View {
     override fun onDefaultError(error: String) {
         toastHelper.showToast(context, error)
     }
-
-    override fun showLoading() {
-        if (!loading.isShowing) {
-            loading.show()
-        }
-    }
-
-    override fun hideLoading() {
-        if (loading.isShowing) {
-            loading.dismiss()
-        }
-    }
-
 }

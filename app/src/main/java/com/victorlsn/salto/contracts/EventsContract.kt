@@ -8,11 +8,7 @@ class EventsContract {
         BaseView<Presenter> {
         fun onEventLogRetrieved(events: ArrayList<LogEvent>)
 
-        fun showLoading()
-
-        fun hideLoading()
-
-        fun onDefaultError(error: String)
+        fun onDefaultError()
     }
 
     interface Presenter {

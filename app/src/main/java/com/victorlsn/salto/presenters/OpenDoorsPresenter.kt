@@ -1,18 +1,15 @@
 package com.victorlsn.salto.presenters
 
-import android.content.Context
-import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.OpenDoorsContract
 import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.data.models.User
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.victorlsn.salto.util.BaseSchedulerProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class OpenDoorsPresenter @Inject constructor(
-    private val context: Context,
+    private val scheduler: BaseSchedulerProvider,
     private val repository: Repository
 ) : BasePresenter<OpenDoorsContract.View>(),
     OpenDoorsContract.Presenter {
@@ -20,8 +17,8 @@ class OpenDoorsPresenter @Inject constructor(
     override fun getDoors() {
         disposable.add(
             repository.getDoors()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::doorsRetrieved, this::defaultError)
         )
     }
@@ -33,8 +30,8 @@ class OpenDoorsPresenter @Inject constructor(
     override fun getUsers() {
         disposable.add(
             repository.getUsers()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::usersRetrieved, this::defaultError)
         )
     }
@@ -45,20 +42,19 @@ class OpenDoorsPresenter @Inject constructor(
 
     override fun openDoor(door: Door?, user: User?) {
         if (door == null || user == null) {
-            defaultError(Error(context.getString(R.string.must_select_user_and_door)))
+            defaultError(Error("You must select a user and a door."))
             return
         }
 
         disposable.add(
-            repository.openDoor(user, door)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+            repository.openDoor(door, user)
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::triedToOpenDoor, this::defaultError)
         )
     }
 
     private fun triedToOpenDoor(success: Boolean) {
-        Timber.d("Tried to open door")
         view?.onOpenDoor(success)
     }
 

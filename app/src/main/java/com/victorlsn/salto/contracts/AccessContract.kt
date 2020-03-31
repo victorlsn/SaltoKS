@@ -12,10 +12,6 @@ class AccessContract {
         fun onGetDoorsSuccess(doors: ArrayList<Door>)
 
         fun onDefaultError(error: String)
-
-        fun showLoading()
-
-        fun hideLoading()
     }
 
     interface Presenter {

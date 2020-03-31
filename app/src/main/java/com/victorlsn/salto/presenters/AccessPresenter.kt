@@ -1,18 +1,15 @@
 package com.victorlsn.salto.presenters
 
-import android.content.Context
-import com.victorlsn.salto.R
 import com.victorlsn.salto.contracts.AccessContract
 import com.victorlsn.salto.data.Repository
 import com.victorlsn.salto.data.models.Door
 import com.victorlsn.salto.data.models.User
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.victorlsn.salto.util.BaseSchedulerProvider
 import timber.log.Timber
 import javax.inject.Inject
 
 class AccessPresenter @Inject constructor(
-    private val context: Context,
+    private val scheduler: BaseSchedulerProvider,
     private val repository: Repository
 ) : BasePresenter<AccessContract.View>(),
     AccessContract.Presenter {
@@ -20,8 +17,8 @@ class AccessPresenter @Inject constructor(
     override fun getDoors() {
         disposable.add(
             repository.getDoors()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::doorsRetrieved, this::defaultError)
         )
     }
@@ -33,8 +30,8 @@ class AccessPresenter @Inject constructor(
     override fun getUsers() {
         disposable.add(
             repository.getUsers()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::usersRetrieved, this::defaultError)
         )
     }
@@ -46,16 +43,15 @@ class AccessPresenter @Inject constructor(
     override fun changePermission(user: User, door: Door, authorized: Boolean) {
         disposable.add(
             repository.changeUserPermissionForDoor(user, door, authorized)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
+                .observeOn(scheduler.ui())
+                .subscribeOn(scheduler.io())
                 .subscribe(this::authorizationChanged, this::defaultError)
         )
     }
 
     private fun authorizationChanged(success: Boolean) {
-        Timber.d("Change Authorization call successful")
         if (!success) {
-            defaultError(Error(context.getString(R.string.permission_change_error)))
+            defaultError(Error("It was not possible to change permissions for this door/user."))
         }
     }
 

@@ -1,7 +1,5 @@
-package com.victorlsn.salto.modelTests
+package com.victorlsn.salto.data.models
 
-import com.victorlsn.salto.data.models.Door
-import com.victorlsn.salto.data.models.User
 import org.junit.Assert
 
 import org.junit.Test
